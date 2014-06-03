@@ -11,3 +11,9 @@
  *= require_self
  *= require_tree .
  */
+
+body {
+  text-align: center;
+  padding-top: 40px;
+  background-image: url('http://i.imgur.com/pgmqGHU.png')
+}
