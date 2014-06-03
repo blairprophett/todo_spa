@@ -59,12 +59,24 @@ $(function(){
     };
 
     App.saveModel = function(model, callback){
-        // DO SOME STUFF HERE TO PERSIST DATA
+        $.ajax({
+            url: this.urls.create.path,
+            type: this.urls.create.method,
+            data: { 
+                todo: model 
+            }
+        })
         callback(model);
-    };
+     };        
 
     App.updateItem = function(model, callback){
-        // DO SOMETHING HERE
+        $.ajax({
+            url: '/todos/' + model.id + '.json',
+            type: 'post',
+            data: {
+                todo: model
+            }
+        })
         callback(model);  
     };
 
