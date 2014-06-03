@@ -59,26 +59,37 @@ $(function(){
     };
 
     App.saveModel = function(model, callback){
+        //console.log(model);
+        //ajax post method
         $.ajax({
             url: this.urls.create.path,
             type: this.urls.create.method,
-            data: { 
-                todo: model 
-            }
-        })
+            data: { todo: model }
+        });
         callback(model);
      };        
 
     App.updateItem = function(model, callback){
+        // (ajax post method to update model finding by id)
         $.ajax({
             url: '/todos/' + model.id + '.json',
             type: 'post',
-            data: {
-                todo: model
-            }
-        })
+            data: { todo: model }
+        });
         callback(model);  
     };
+
+
+    App.deleteItem = function(model, callback){
+        //deletes item found by id (ajax delete)
+        $.ajax({
+            url: '/todos/' + model.id + '.json',
+            type: 'delete'
+            // data: {todo: model}
+        });
+        callback(model);
+     };
+
 
     App.doThis = function(func){
     	func.apply(App);
@@ -118,7 +129,7 @@ $(function(){
     App.doThis(function(){
         var _this = this;
         
-        //CHECKBOX EVENTHANDLER
+        //TODO EVENTHANDLER
         $("#todos").on("click", ".todo", function(event){
            console.log(this.dataset); 
            var id = Number(this.dataset.id);
@@ -131,6 +142,15 @@ $(function(){
                     $(view).toggleClass("done-true");
                });
            }
+           //if event target, the delete button, is clicked, remove from db and view
+            else if(event.target.id === 'removeTodo'){
+                console.log(this);
+                var view = this;
+                var todo = _this.findModel(id);
+                App.deleteItem(todo, function(data) {
+                    $(view).remove();
+                });
+            }
         });
     });
 

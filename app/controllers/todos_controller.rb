@@ -30,12 +30,13 @@ class TodosController < ApplicationController
     Todo.find(params[:id]).destroy
     respond_to do |f|
       f.json { render :json => 'deleted!' }
+    end
   end
 
   private
 
   def todo_params
-    params.require(:todo).permit(:id, :title, :completed)
+    params.require(:todo).permit(:title, :completed)
   end
 
 end
